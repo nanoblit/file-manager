@@ -1,31 +1,22 @@
-function main() {
-  console.log(process.argv);
-  const username = getUsername();
-  console.log(username);
+import { resolveCommand } from "./command.js";
+import { getInitialContext } from "./context.js";
+import { getInput } from "./getInput.js";
+
+async function main() {
+  const context = getInitialContext();
+
+  console.log(context);
+
+  while (true) {
+    const input = await getInput("this is a question");
+    console.log(input);
+
+    if (!input.length) {
+      continue;
+    }
+
+    resolveCommand(input);
+  }
 }
 
-function getUsername() {
-  if (process.argv.length < 3) {
-    return null;
-  }
-
-  const usernameValue = process.argv[2].split("=");
-
-  if (usernameValue.length !== 2) {
-    return null;
-  }
-
-  const [varName, username] = usernameValue;
-
-  if (varName.toLowerCase() !== "--username") {
-    return null;
-  }
-
-  if (!username.trim()) {
-    return null;
-  }
-
-  return username;
-}
-
-main();
+await main();
