@@ -1,8 +1,15 @@
-import os from "node:os";
-import path from "node:path";
+export function showWelcomeMessage() {
+  const username = getUsername();
 
-export function getInitialContext() {
-  return { username: getUsername(), currentDirectory: getHomeDirectory() };
+  if (username) {
+    console.log(`Welcome to the File Manager, ${username}!`);
+
+    return username;
+  }
+
+  console.log("Welcome to the File Manager!");
+
+  return null;
 }
 
 function getUsername() {
@@ -27,8 +34,4 @@ function getUsername() {
   }
 
   return username;
-}
-
-function getHomeDirectory() {
-  return path.join(os.homedir());
 }
