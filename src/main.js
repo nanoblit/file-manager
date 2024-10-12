@@ -40,8 +40,8 @@ async function main() {
 
       printCurrentDirectory(currentDirectory);
     } catch (e) {
-      // TODO: Remove e
-      console.log("Operation failed", e);
+      // TODO: Only log the message
+      console.log(e);
     }
   }
 }
