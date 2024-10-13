@@ -8,5 +8,5 @@ export async function cdCommand(command, currentDirectory) {
 
   await access(newDirectory);
 
-  return { newDirectory };
+  return newDirectory;
 }

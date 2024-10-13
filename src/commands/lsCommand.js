@@ -24,7 +24,7 @@ export async function lsCommand(_command, currentDirectory) {
   const sortedFolders = items.filter(({ type }) => type === "directory").sort((a, b) => a.name.localeCompare(b.name));
   const sortedFiles = items.filter(({ type }) => type === "file").sort((a, b) => a.name.localeCompare(b.name));
   const sortedItems = [...sortedFolders, ...sortedFiles];
-  const output = sortedItems.map(({ name, type }) => `${name} --- ${type}`).join("\n");
+  const output = sortedItems.map(({ name, type }) => `${name} --- ${type}`).join("\n") + "\n";
 
-  return { output };
+  process.stdout.write(`\n${output}`);
 }

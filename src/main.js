@@ -7,15 +7,15 @@ import { showWelcomeMessage } from "./welcomeMessage.js";
 import { printCurrentDirectory, showExitMessage } from "./main.utils.js";
 
 async function main() {
-  let currentDirectory = path.join(os.homedir());
   const username = showWelcomeMessage();
-
   process.on("exit", () => showExitMessage(username));
 
+  let currentDirectory = path.join(os.homedir());
   printCurrentDirectory(currentDirectory);
 
   // Handle user's input
   while (true) {
+    process.stdout.write("\n");
     const input = await getInput("Please, enter a command");
 
     assert(input.every((element) => typeof element === "string"));
@@ -25,22 +25,15 @@ async function main() {
     }
 
     try {
-      const { output, newDirectory } = await resolveCommand(input, currentDirectory);
+      currentDirectory = await resolveCommand(input, currentDirectory);
 
-      assert(typeof output === "string" || output === null);
-      assert(typeof newDirectory === "string" || newDirectory === null);
+      assert(typeof currentDirectory === "string");
 
-      if (newDirectory) {
-        currentDirectory = newDirectory;
-      }
-
-      if (output) {
-        console.log(output);
-      }
-
+      process.stdout.write("\n");
       printCurrentDirectory(currentDirectory);
     } catch (e) {
-      // TODO: Only log the message
+      // TODO: Only log the message inside resolveCommand
+      process.stdout.write("\n");
       console.log(e);
     }
   }

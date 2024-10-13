@@ -6,5 +6,5 @@ export async function upCommand(_command, currentDirectory) {
 
   await access(newDirectory);
 
-  return { newDirectory };
+  return newDirectory;
 }
